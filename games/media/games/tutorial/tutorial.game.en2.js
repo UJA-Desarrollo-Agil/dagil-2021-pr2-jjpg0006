@@ -129,6 +129,57 @@ calleuno: new undum.SimpleSituation(
     }
 ),
 
+calledos: new undum.SimpleSituation(
+    "<h1>En la calle Principal</h1>\
+    <p>Te encuentras en la calle principal, donde desde aquí podrás ir a todos los sitios de la ciudad:</p>\
+    <p class='transient'><a href='aeropuerto' class='once'> -Ir al aeropuerto a comprar el boleto e irte </a></p>\
+    <p class='transient'><a href='pena' class='once'> -Ir a la peña a comprar la entrada</a></p>\
+    <p class='transient'><a href='atajopena' class='once'> -Intentar ir a la peña a través de un atajo del que no oiste hablar pero ahorrarás tiempo </a></p>\
+    <p class='transient'><a href='tienda' class='once'> -Ir a la tienda</a></p>\
+    "
+    ),
+
+aeropuerto: new undum.SimpleSituation(
+    "<h1>En el aeropuerto</h1>"
+),
+
+pena: new undum.SimpleSituation(
+    "<h1>En la pena</h1>"
+),
+
+atajopena: new undum.SimpleSituation(
+    "<h1>En el atajopena</h1>"
+),
+
+tienda: new undum.SimpleSituation(
+    "<h1>En la tienda</h1>\
+    <p> Una vez estas en la tienda puedes <a href='./comprarc' class='once'>comprar la equipación del Real Madrid Oficial </a> o <a href='./comprarb' class='once'> comprar de los Chinos </a> que es mucho más barata o <a href='./comprarboth' class='once'> comprar dos con una oferta </a>, aunque solo necesitas una</p>",
+
+    {
+        actions:{
+        ayudar: function (character, system, action) {
+             system.setCharacterText("<p>Decides ayudar.</p>");
+             system.setQuality("dinero", 100);
+         },
+        comprarc: function (character, system, action) {
+            system.setCharacterText("<p>Decides comprar la equipación cara.</p>");
+            system.setQuality("equipacionc", 1);
+        },
+        comprarb: function (character, system, action) {
+            system.setCharacterText("<p>Decides comprar la equipación barata.</p>");
+            system.setQuality("equipacionb", 1);
+        },
+        comprarboth: function (character, system, action) {
+            system.setCharacterText("<p>Decides ambas equipaciones.</p>");
+            system.setQuality("equipacionb", 1);
+            system.setQuality("equipacionc", 1);
+        }},
+        enter: function (character, system, action) {
+            system.setQuality("hora", character.qualities.hora + 1);
+            system.write("<p class='transient'>Antes de entrar en la tienda ves a un encargado de la tienda en la entrada que necesita ayuda y te pregunta si le puedes echar una mano, parece estar teniendo un mal día sin embargo no te gustaría perder mucho tiempo, sin embargo <a href='./ayudar' class='once'> puedes ayudarlo </a>.</p>");
+        },
+    },
+),
 
 habitacionbuscar: new undum.SimpleSituation(
     "<h1>En la habitación</h1>\
