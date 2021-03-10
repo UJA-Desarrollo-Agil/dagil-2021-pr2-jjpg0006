@@ -70,6 +70,84 @@ pasillo: new undum.SimpleSituation(
     <p class='transient'><a href='calleuno' class='once'> -Salir a la calle </a></p>"
 ),
 
+comedor: new undum.SimpleSituation(
+    "<h1>En el comedor</h1>\
+    <img src='media/games/tutorial/comedor.jpg' class='float_right' width='245' height='206'>\
+    <p>Te encuentras solo en la casa mientras tomas tus tostada con tomate y jamón con zumo de naranaja como de costumbre mientras juegas con el móvil perdiendo una hora, ves el dinero que necesitas y las llaves en la encimera antes de salir de casa por lo que\
+    te alegras de haber ido a desayunar y no salir con prisa cuando estabas en el pasillo, cuando acabas te diriges a la encimera y coges el dinero y las llaves:</p>\
+    <p class='transient'><a href='./bolsillo' class='once'> Coger Dinero y llaves </a></p>",
+
+
+
+    {
+        actions: {
+            bolsillo: function (character, system, action) {
+                system.setCharacterText("<p>A partir de ahora el personaje dispone de 50 euros y las llaves</p>");
+                system.setQuality("dinero", 50);
+                system.setQuality("llaves", 1);
+                system.write("<p>Tienes todo para salir y comprar lo que necesitas, pero no sabes si echar un vistazo por si falta algo en tu habitación ya que al levantarte estabas adormido. </p>\
+                <p class='transient'><a href='habitacionbuscar' class='once'> -Ir a la habitación </a></p>\
+                <p class='transient'><a href='calleuno' class='once'> -Ir a la calle </a></p>");
+            }
+        },
+        enter: function (character, system, action) {
+            if (character.qualities.hora == 8) {
+                system.write("<p>De camino hacia el comedor te encuentras con tu madre la cual al ver que te has depertado temprano cuando ella te llama, decide darte un tique de descuento en el billete de avión, tras eso se marcha</p>");
+                system.setQuality("boleto", 1);
+            }
+            system.setQuality("hora", character.qualities.hora + 1);
+        }
+
+    },
+
+
+
+),
+
+calleuno: new undum.SimpleSituation(
+    "<h1>En la calle Simón</h1>\
+    <center><img src='media/games/tutorial/policia.jpg' width='350' height='250'></center>\
+    <p> Ves un policía por la calle y te pregunta donde está tu mascarilla y te advierte que no podrás ir a ningún lado si no la llevas, tu atemorizado <a href='./bolsillo' class='once'>te tocas los bolsillos.</a></p>",
+
+    {
+        actions: {
+            bolsillo: function (character, system, action) {
+                if (character.qualities.mascarilla == 1) {
+                    system.write("<p>Le enseñas la mascarilla y te la pones por lo que el policía se va y <a href='calledos' class='once'> te vas a la calle principal </a> donde puedes continuar con tu camino</p>");
+                }
+                else {
+                    if (character.qualities.llaves == 1) {
+                        system.write("<p>Vuelves a la habitación y coges la mascarilla pero has perdido algo de tiempo, después de eso te vas <a href='calledos' class='once'> a la calle principal </a></p>");
+                        system.setQuality("mascarilla", 1);
+                        system.setQuality("hora", character.qualities.hora + 1);
+
+                    }
+                     else{ system.write("<<h1>Fin del juego, objetivo no cumplido</h1> <p>Has perdido, no puedes entrar a la casa ya que estabas solo y pasará mucho tiempo hasta que vuelvan por lo que no te dará tiempo a comprar ni el vuelo de avión ni la entrada de la Champions</p>");}
+                }
+            }
+        }
+    }
+),
+
+
+habitacionbuscar: new undum.SimpleSituation(
+    "<h1>En la habitación</h1>\
+    <img src='media/games/tutorial/mascarilla.jpg' class='float_right' width='245' height='206'>\
+    <p><a href='./bolsillo' class='once'> Recoges la mascarilla </a> que hace falta para salir a la calle debido a que la obligación que existe por culpa de la nueva pandemia, tras eso te quedas otro rato buscando por si te hace falta algo más, pero no encuentras nada asique\
+    abandonas la habitación y <a href='calleuno' class='once'> te vas a la calle directamente.</a></p>",
+
+
+    {
+        actions: {
+            bolsillo: function (character, system, action) {
+                system.setQuality("mascarilla", 1);
+            }
+        }
+    }
+
+
+
+),
 
 finalone: new undum.SimpleSituation(
     "<h1>Fin del juego, objetivo no cumplido I</h1>\
