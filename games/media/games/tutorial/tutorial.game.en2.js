@@ -42,6 +42,30 @@ undum.game.start = "start";
  * possess. We don't have to be exhaustive, but if we miss one out then
  * that quality will never show up in the character bar in the UI. */
 undum.game.qualities = {
+    energia: new undum.NumericQuality(
+        "Energia", { priority: "0002", group: 'estadisticas' }
+    ),
+    hora: new undum.NumericQuality(
+        "Hora", { priority: "0001", group: 'tiempo' }
+    ),
+    dinero: new undum.NumericQuality(
+        "Dinero", { priority: "0001", group: 'inventario' }
+    ),
+    mascarilla: new undum.OnOffQuality(
+        "Mascarilla", { priority: "0002", group: 'inventario', onDisplay: "&#10003;" }
+    ),
+    boleto: new undum.OnOffQuality(
+        "Boleto de descuento", { priority: "0003", group: 'inventario', onDisplay: "&#10003;" }
+    ),
+    llaves: new undum.OnOffQuality(
+        "Llaves", { priority: "0003", group: 'inventario', onDisplay: "&#10003;" }
+    ),
+    equipacionc: new undum.OnOffQuality(
+        "Equipación RM", { priority: "0004", group: 'inventario', onDisplay: "&#10003;" }
+    ),
+    equipacionb: new undum.OnOffQuality(
+        "Equipación chinos", { priority: "0005", group: 'inventario', onDisplay: "&#10003;" }
+    )
 };
 
 // ---------------------------------------------------------------------------
@@ -51,6 +75,9 @@ undum.game.qualities = {
  * the end. It is an error to have a quality definition belong to a
  * non-existent group. */
 undum.game.qualityGroups = {
+    estadisticas: new undum.QualityGroup('Estadisticas', { priority: "0001" }),
+    tiempo: new undum.QualityGroup('Hora', { priority: "0001" }),
+    inventario: new undum.QualityGroup('Inventario', { priority: "0001" })
 };
 
 // ---------------------------------------------------------------------------
@@ -58,4 +85,6 @@ undum.game.qualityGroups = {
  * to configure the character at the start of play. */
 undum.game.init = function(character, system) {
     system.setCharacterText("<p>You are starting on an exciting journey.</p>");
+    character.qualities.energia = 12;
+    character.qualities.hora = 8;
 };
