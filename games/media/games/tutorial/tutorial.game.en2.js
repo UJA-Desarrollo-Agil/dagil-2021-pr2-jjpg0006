@@ -37,7 +37,55 @@ undum.game.situations = {
         <p class='transient'><a href='pasillo' class='once'> - Despertarte </a></p>\
         <p class='transient'><a href='habitaciondos' class='once'> - Seguir durmiendo hasta que suene la alarma </a></p>"     
     ),
+
+
+habitaciondos: new undum.SimpleSituation(
+    "<h1>Descansar</h1>\
+    <center><img src='media/games/tutorial/despertador.jpg'></center>\
+    <p> Bip... bip..., la alarma vuelve a sonar, por lo que puedes levantarte o seguir durmiendo:</p>\
+    <p class='transient'><a href='pasillo' class='once'> -Despertarte ahora </a></p>\
+    <p class='transient'><a href='finalone' class='once'> -Seguir durmiendo </a></p>\
+    ",
+
+    {
+
+        enter: function (character, system, action) {
+            system.setCharacterText("<p>Decides dormirte dos horas más, por lo que ganas energía tras haber dormido mejor.</p>");
+            system.setQuality("hora", character.qualities.hora + 0.1);
+        }
+
+    },
+
+),
+
+
+
+pasillo: new undum.SimpleSituation(
+    "<h1>En el pasillo</h1>\
+    <img src='media/games/tutorial/pasillo.jpg' class='float_right'>\
+    <p> Tras despertarte y vestirte te diriges al pasillo y andando recuerdas que el Real Madrid jugará mañana la final de la Championship League, recuerdas que te encargaron\
+        de comprar el billete de avión en el aeropuerto (donde llegar a antes de una determinada hora ya que o si no el avión despegará) y la entrada en un la peña del Madrid y comprar la equipación del Madrid para apoyar al equipo y que te reconozcan en la tienda.</p>\
+    <p> Te impacientas mucho y no quieres perder mucho tiempo, aunque todavía es temprano, por lo que no sabes si salir ya e irte a comprar lo que necesitas o bien ir al comerdor y comer</p>\
+    <p class='transient'><a href='comedor' class='once'> -Ir al comedor </a></p>\
+    <p class='transient'><a href='calleuno' class='once'> -Salir a la calle </a></p>"
+),
+
+
+finalone: new undum.SimpleSituation(
+    "<h1>Fin del juego, objetivo no cumplido I</h1>\
+    <center><img src='media/games/tutorial/end.jpg' width='450' height='200'></center>\
+    <p>No te despiertas en todo el día y acabas levantándote a las 24:00 por lo que no podrás ver a tu equipo en la final, almenos tu energía estará al máximo al dia siguiente</p>",
+    {
+        enter: function (character, system, action) {
+            system.setCharacterText("<p>Son las 12 de la noche del siguiente día, pero almenos dispondras de toda la energía posible");
+            system.setQuality("hora", 24, 00);
+            character.qualities.dinero = 20;
+        }
+    }
+),
+
 };
+
 
 // ---------------------------------------------------------------------------
 /* The Id of the starting situation. */
