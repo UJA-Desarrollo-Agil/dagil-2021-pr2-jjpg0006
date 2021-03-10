@@ -29,7 +29,13 @@ undum.game.slideUpSpeed = 500
 /* The situations that the game can be in. Each has a unique ID. */
 undum.game.situations = {
     start: new undum.SimpleSituation(
-       
+        "<h1>Habitación</h1>\
+        <center> <img src='media/games/tutorial/hotel.jpg'></center>\
+        <p>Juan José, Juan José, Juan José... escuchas tu nombre repetidamente, te dás cuenta de que esas voces vienen de tu madre, te llama como si tuvieras algo\
+        importante que hacer, sin embargo miras el móvil (con el que siempre tendrás la hora a mano) y la alarma está puesta para las nueve, una más tarde de la hora actual. </p>\
+        <p>Tienes que tomar ahora una decisión: levantarte o bien esperar a que suene la alarma</p>\
+        <p class='transient'><a href='pasillo' class='once'> - Despertarte </a></p>\
+        <p class='transient'><a href='habitaciondos' class='once'> - Seguir durmiendo hasta que suene la alarma </a></p>"     
     ),
 };
 
