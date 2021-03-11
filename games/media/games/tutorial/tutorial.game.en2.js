@@ -40,7 +40,7 @@ undum.game.situations = {
 
 
     habitaciondos: new undum.SimpleSituation(
-        "<h1>Descansar</h1>\
+        "<h1>Seguir durmiendo</h1>\
     <center><img src='media/games/tutorial/despertador.jpg'></center>\
     <p> Bip... bip..., la alarma vuelve a sonar, por lo que puedes levantarte o seguir durmiendo:</p>\
     <p class='transient'><a href='pasillo' class='once'> -Despertarte ahora </a></p>\
@@ -50,8 +50,8 @@ undum.game.situations = {
         {
 
             enter: function (character, system, action) {
-                system.setCharacterText("<p>Decides dormirte dos horas más, por lo que ganas energía tras haber dormido mejor.</p>");
-                system.setQuality("hora", character.qualities.hora + 0.1);
+                system.setCharacterText("<p>Decides quedarte una hora más durmiendo, por lo que pasa una hora. Son las 9 de la mañana</p>");
+                character.minutosiniciales=character.minutosiniciales-60;
             }
 
         },
@@ -65,17 +65,26 @@ undum.game.situations = {
     <img src='media/games/tutorial/pasillo.jpg' class='float_right'>\
     <p> Tras despertarte y vestirte te diriges al pasillo y andando recuerdas que el Real Madrid jugará mañana la final de la Championship League, recuerdas que te encargaron\
         de comprar el billete de avión en el aeropuerto (donde llegar a antes de una determinada hora ya que o si no el avión despegará) y la entrada en un la peña del Madrid y comprar la equipación del Madrid para apoyar al equipo y que te reconozcan en la tienda.</p>\
-    <p> Te impacientas mucho y no quieres perder mucho tiempo, aunque todavía es temprano, por lo que no sabes si salir ya e irte a comprar lo que necesitas o bien ir al comerdor y comer</p>\
+    <p> Te impacientas  mucho ya que recuerdas que cierran a las 14:30 y además tienes que estar en casa a esa hora para la hora de la comida por lo que calculas el tiempo que queda, aunque todavía es temprano, pero no sabes si salir ya e irte a comprar lo que necesitas o bien ir al comerdor y comer</p>\
     <p class='transient'><a href='comedor' class='once'> -Ir al comedor </a></p>\
-    <p class='transient'><a href='calleuno' class='once'> -Salir a la calle </a></p>"
+    <p class='transient'><a href='calleuno' class='once'> -Salir a la calle </a></p>",
+
+    {
+
+        enter: function (character, system, action) {
+            system.setCharacterText("<p>Haces calculo de la cantidad de tiempo que tienes hasta que abran las tiendas.</p>");
+            system.setQuality("hora",character.minutosiniciales);
+        }
+
+    },
     ),
 
     comedor: new undum.SimpleSituation(
         "<h1>En el comedor</h1>\
     <img src='media/games/tutorial/comedor.jpg' class='float_right' width='245' height='206'>\
     <p>Te encuentras solo en la casa mientras tomas tus tostada con tomate y jamón con zumo de naranaja como de costumbre mientras juegas con el móvil perdiendo una hora, ves el dinero que necesitas y las llaves en la encimera antes de salir de casa por lo que\
-    te alegras de haber ido a desayunar y no salir con prisa cuando estabas en el pasillo, cuando acabas te diriges a la encimera y coges el dinero y las llaves:</p>\
-    <p class='transient'><a href='./bolsillo' class='once'> Coger Dinero y llaves </a></p>",
+    te alegras de haber ido a desayunar y no salir con prisa cuando estabas en el pasillo, cuando acabas te diriges a la encimera y <a href='./bolsillo' class='once'>coges el dinero y las llaves.</a></p>\
+    ",
 
 
 
@@ -83,7 +92,7 @@ undum.game.situations = {
             actions: {
                 bolsillo: function (character, system, action) {
                     system.setCharacterText("<p>A partir de ahora el personaje dispone de 50 euros y las llaves</p>");
-                    system.setQuality("dinero", 50);
+                    system.setQuality("dinero", 80);
                     system.setQuality("llaves", 1);
                     system.write("<p>Tienes todo para salir y comprar lo que necesitas, pero no sabes si echar un vistazo por si falta algo en tu habitación ya que al levantarte estabas adormido. </p>\
                 <p class='transient'><a href='habitacionbuscar' class='once'> -Ir a la habitación </a></p>\
@@ -91,17 +100,14 @@ undum.game.situations = {
                 }
             },
             enter: function (character, system, action) {
-                if (character.qualities.hora == 8) {
+                if (character.qualities.hora == 390) {
                     system.write("<p>De camino hacia el comedor te encuentras con tu madre la cual al ver que te has depertado temprano cuando ella te llama, decide darte un tique de descuento en el billete de avión, tras eso se marcha</p>");
                     system.setQuality("boleto", 1);
                 }
-                system.setQuality("hora", character.qualities.hora + 1);
+                system.setQuality("hora", character.qualities.hora - 60);
             }
 
         },
-
-
-
     ),
 
     calleuno: new undum.SimpleSituation(
@@ -113,16 +119,16 @@ undum.game.situations = {
             actions: {
                 bolsillo: function (character, system, action) {
                     if (character.qualities.mascarilla == 1) {
-                        system.write("<p>Le enseñas la mascarilla y te la pones por lo que el policía se va y <a href='calledos' class='once'> te vas a la calle principal </a> donde puedes continuar con tu camino</p>");
+                        system.write("<p>Le enseñas la mascarilla y te la pones por lo que el policía se va y <a href='calledos' class='once'> te vas a la calle principal </a> donde puedes continuar con tu camino.</p>");
                     }
                     else {
                         if (character.qualities.llaves == 1) {
                             system.write("<p>Vuelves a la habitación y coges la mascarilla pero has perdido algo de tiempo, después de eso te vas <a href='calledos' class='once'> a la calle principal </a></p>");
                             system.setQuality("mascarilla", 1);
-                            system.setQuality("hora", character.qualities.hora + 1);
+                            system.setQuality("hora", character.qualities.hora - 15);
 
                         }
-                        else { system.write("<<h1>Fin del juego, objetivo no cumplido</h1> <p>Has perdido, no puedes entrar a la casa ya que estabas solo y pasará mucho tiempo hasta que vuelvan por lo que no te dará tiempo a comprar ni el vuelo de avión ni la entrada de la Champions</p>"); }
+                        else { system.write("<<h1>Fin del juego, objetivo no cumplido</h1> <p>Has perdido, no puedes entrar a la casa ya que estabas solo y pasará mucho tiempo hasta que vuelvan por lo que no te dará tiempo a comprar ni el vuelo de avión ni la entrada de la Champions.</p>"); }
                     }
                 }
             }
@@ -131,12 +137,48 @@ undum.game.situations = {
 
     calledos: new undum.SimpleSituation(
         "<h1>En la calle Principal</h1>\
+        <center><img src='media/games/tutorial/principal.jpg' width='450' height='250'></center>\
     <p>Te encuentras en la calle principal, donde desde aquí podrás ir a todos los sitios de la ciudad:</p>\
-    <p class='transient'><a href='aeropuerto' class='once'> -Ir al aeropuerto a comprar el boleto e irte </a></p>\
-    <p class='transient'><a href='pena' class='once'> -Ir a la peña a comprar la entrada</a></p>\
-    <p class='transient'><a href='atajopena' class='once'> -Intentar ir a la peña a través de un atajo del que no oiste hablar pero ahorrarás tiempo, este camino solo es de ida por motivos de seguridad COVID</a></p>\
-    <p class='transient'><a href='tienda' class='once'> -Ir a la tienda</a></p>\
-    "
+    <p class='transient'><a href='aeropuerto' class='once'> -Ir al aeropuerto a comprar el boleto e irte. </a></p>\
+    <p class='transient'><a href='pena' class='once'> -Ir a la peña a comprar la entrada.</a></p>\
+    <p class='transient'><a href='atajopena' class='once'> -Intentar ir a la peña a través de un atajo del que no oiste hablar.</a></p>\
+    <p class='transient'><a href='tienda' class='once'> -Ir a la tienda.</a></p>\
+    <p class='transient'><a href='casa' class='once'> -Ir a casa.</a></p>\
+    ",
+    {
+    
+        enter: function (character, system, from) {
+            system.setQuality("hora", character.qualities.hora - 30);
+            if(character.qualities.hora<=0){
+            system.doLink('finaltwo');
+            }
+        }
+    }
+    ),
+
+    casa: new undum.SimpleSituation(
+        "",
+        {  
+            enter: function (character, system, from) {
+                system.write( "<h1>En la casa</h1>\
+                <center><img src='media/games/tutorial/casa.jpg' width='450' height='250'></center>\
+                <p>Has vuelto a casa, pero todavía tienes cosas que conseguir para antes de mañana, por lo que deberás de conseguirlas antes de terminar.</p>");
+              
+                    if (character.qualities.billeteavion == 1 && character.qualities.entrada && character.qualities.equipacionc) {
+                        system.doLink('casavictoria');
+                    } else { system.write("<p>Todavía no tienes todo lo necesario para poder ver al Madrid el siguiente día.</a> </p>"); 
+                     system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
+                 
+            }
+        }
+
+    ),
+
+    casavictoria: new undum.SimpleSituation(
+         "<h1>!!!Objetivo cumplido!!!</h1>\
+         <center><img src='media/games/tutorial/victoria.jpg' width='350' height='170'></center>\
+         <p>Has conseguido la equipación oficial del Real Madrid, el billete de avión y la entrada para el partido, por lo que podrás pasar el resto del día en tu casa\
+         mientras esperas con impaciencia que llegue mañana.</p>"
     ),
 
     aeropuerto: new undum.SimpleSituation(
@@ -145,41 +187,46 @@ undum.game.situations = {
     
             actions: {
                 comprar: function (character, system, action) {
+                    if (character.qualities.dinero>=70){
                     system.setQuality("billeteavion", 1);
-                    system.setQuality("dinero", character.qualities.dinero-50);
+                    system.setQuality("dinero", character.qualities.dinero-70);}
+                    else{ system.setCharacterText("<p>No tienes el dinero necesario para comprar el boleto.</p>");}
                 }
             },
     
     
             enter: function (character, system, from) {
                 system.write( "<h1>En el aeropuerto</h1>\
+                <center><img src='media/games/tutorial/aeropuerto.jpg' width='450' height='250'></center>\
                 <p>Te encuentras dentro del aeropuerto donde se adquieren los billetes de avión</p>");
     
     
                 if (character.qualities.billeteavion != 1) {
                     if (character.qualities.boleto == 1) {
                         system.doLink('aeropuertoconboleto');
-                    } else { system.write("<p>Te diriges hacia la taquilla para adquirir tu billete de vuelo, donde te dicen que el precio total es de 50 euros, recuerdas que\
+                    } else { system.write("<p>Te diriges hacia la taquilla para adquirir tu billete de vuelo, donde te dicen que el precio total es de 70 euros, recuerdas que\
                     tu madre tenía un boleto de un descuento, pero como no te despertaste cuanto te llamó supones que se le olvido dártelo, mientras te lamentas</p>\
-                    <p> <a href='./comprar' class='once'> Comprar boleto </a> </p>"); 
-                     system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
-                } else{ system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
+                    <p class='transient'> <a href='./comprar' class='once'> Comprar boleto </a> </p>"); 
+                     system.write("<p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
+                } else{ system.write("<p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
             }
         }
     ),
 
 
    aeropuertoconboleto: new undum.SimpleSituation(
-    "<p>Te diriges hacia la taquilla para adquirir tu billete de vuelo, donde te dicen que el precio total es de 50 euros, recuerdas que tu madre al levantarte te dio\
-   un boleto de descuento de 40 euros debidos a que hicisteis muchos vuelos el año pasado, por lo que el boleto de avión solo costaría 10 euros</p>\
-    <p> <a href='./comprar' class='once'> Comprar boleto </a> <p><a href='calledos' class='once'> Volver a la calle principal</a></p> </p> ",
+    "<p>Te diriges hacia la taquilla para adquirir tu billete de vuelo, donde te dicen que el precio total es de 70 euros, recuerdas que tu madre al levantarte te dio\
+   un boleto de descuento de 50 euros debido a que hicisteis muchos vuelos el año pasado, por lo que el boleto de avión solo costaría 20 euros</p>\
+    <p class='transient'> <a href='./comprar' class='once'> Comprar boleto </a> <p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p> </p> ",
 
         {
             actions: {
                 comprar: function (character, system, action) {
+                    if (character.qualities.dinero>=20){
                     system.setQuality("billeteavion", 1);
                     system.setQuality("boleto", 0);
-                    system.setQuality("dinero", character.qualities.dinero-10);
+                    system.setQuality("dinero", character.qualities.dinero-20);}
+                    else{ system.setCharacterText("<p> No dispones del dinero sufiente, por lo que no puedes comprar el billete de avión. </p>");}
                 }
             }
         }
@@ -192,15 +239,19 @@ undum.game.situations = {
 
         actions: {
             comprar: function (character, system, action) {
+                if (character.qualities.dinero>=50){
                 system.setQuality("equipacionb", 0);
                 system.setQuality("entrada", 1);
-                system.setQuality("dinero", character.qualities.dinero-50);
+                system.setQuality("dinero", character.qualities.dinero-50);}
+                else{ system.setCharacterText("<p>No tienes el dinero necesario para comprar el boleto.</p>");}
+                
             }
         },
 
 
         enter: function (character, system, from) {
             system.write( "<h1>En la peña</h1>\
+            <center><img src='media/games/tutorial/pena.jpg' width='450' height='250'></center>\
             <p>Te encuentras en la entrada de la peña donde se adquieren las entradas del madrid</p>");
 
 
@@ -208,9 +259,9 @@ undum.game.situations = {
                 if (character.qualities.equipacionb == 1) {
                     system.doLink('penaequipacionb');
                 } else { system.write("<p>Ves al presidente y te pregunta que si tienes una camiseta para el partido de su hijo de hoy, a lo que contestas no,\
-                 tras una breve charla te dice que puedes <a href='./comprar' class='once'> comprar la entrada por 50 euros </a></p>"); 
-                 system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
-            } else{ system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
+                 tras una breve charla te dice que puedes <a href='./comprar' class='once'> comprar la entrada por 50 euros. </a></p>"); 
+                 system.write("<p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
+            } else{ system.write("<p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p>");}
         }
     }
     ),
@@ -224,7 +275,7 @@ undum.game.situations = {
         {
             actions: {
                 aceptar: function (character, system, action) {
-                    system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");
+                    system.write("<p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p>");
                     system.setQuality("equipacionb", 0);
                     system.setQuality("entrada", 1);
                 }
@@ -235,29 +286,31 @@ undum.game.situations = {
 
     atajopena: new undum.SimpleSituation(
 
-        "<p>Es un gran atajo que te ha ahorrado mucho tiempo por lo que te alegras de haber ido por el, sin embargo no podrás volver por él para ir a la calle principal por motivos COVID , ahora podras <a href='pena' class='once'> ir a la peña </a> </p>",
+        "<p>Creías que era un gran atajo pero en verdad has tardado el mismo tiempo que por el camino habitual,\
+         sin embargo no podrás volver por él para ir a la calle principal por motivos COVID , sigues hasta <a href='pena' class='once'> llegar a la peña. </a> </p>",
 
 
 
         {
             actions: {
                 recoger: function (character, system, action) {
-                    system.setCharacterText("<p>Tu dinero aumenta en 50.</p>");
-                    system.setQuality("dinero", character.qualities.dinero + 50);
+                    system.setCharacterText("<p>Tu dinero aumenta en 30.</p>");
+                    system.setQuality("dinero", character.qualities.dinero + 30);
                 },
                 dardinero: function (character, system, action) {
                     system.setCharacterText("<p>Tras darle el dinero sale corriendo, tratas de alcanzarlo pero al final se acaba llendo, pierdes tiempo y dinero.</p>");
                     system.setQuality("dinero", 0);
-                    system.setQuality("tiempo", character.qualities.tiempo + 50);
                 }
             },
             enter: function (character, system, action) {
-                system.write("<h1>En el atajopena</h1>");
+                system.write("<h1>En el atajopena</h1>\
+                <center><img src='media/games/tutorial/callejon.jpg' width='450' height='250'></center>");
                 if (character.variable == 0) {
-                    system.write("<p>Acabas de encontrar <a href='./recoger' class='once'> un billete de 50 euros</a> que se añadirán a tu cuenta.</p>");
-                    variable = 1;
+                    system.write("<p>Acabas de encontrar 30 euros  en el suelo. <a href='./recoger' class='once'> que puedes recoger </a></p>");
+                    character.variable = 1;
                 }
-                if (character.qualities.hora < 5) {
+                if (character.extrano == 0) {
+                    character.extrano=1;
                     system.write("<p>Encuentras a una persona la cual te pide el dinero que llevas prometiendote que te devolverá el doble del dinero que le has dado, <a href='./dardinero' class='once'> puedes darselo </a> o pasar de el.</p>");
                 }
             },
@@ -274,24 +327,33 @@ undum.game.situations = {
             actions: {
                 ayudar: function (character, system, action) {
                     system.setCharacterText("<p>Decides ayudar.</p>");
-                    system.setQuality("dinero", character.qualities.dinero + 20);
-                    system.setQuality("hora", character.qualities.hora + 1);
-                    character.ayudar=1;
+                    system.setQuality("dinero", character.qualities.dinero + 25);
+                    system.setQuality("hora", character.qualities.hora - 30);
 
+                    if(character.qualities.hora<=0){
+                    system.doLink('finaltwo');
+                    }
                 },
                 comprarc: function (character, system, action) {
+                    if(character.qualities.dinero>=60){
                     system.setCharacterText("<p>Decides comprar la equipación cara.</p>");
                     system.setQuality("equipacionc", 1);
-                    character.equipacionmadrid=1;
+                    system.setQuality("dinero", character.qualities.dinero - 60);
+                    character.equipacionmadrid=1;}
+                    else{ system.setCharacterText("<p>No tienes el dinero necesario para comprar la equipación del Real Madrid.</p>");}
                 },
                 comprarb: function (character, system, action) {
+                    if(character.qualities.dinero>=20){
                     system.setCharacterText("<p>Decides comprar la equipación barata.</p>");
                     system.setQuality("equipacionb", 1);
-                    character.equipacionchino=1;
+                    system.setQuality("dinero", character.qualities.dinero - 20);
+                    character.equipacionchino=1;}
+                    else{ system.setCharacterText("<p>No tienes el dinero necesario para comprar la equipación barata del Real Madrid.</p>");}
                 }
             },
             enter: function (character, system, action) {
                 system.write( "<h1>En la tienda</h1>\
+                <center><img src='media/games/tutorial/tienda.jpg' width='450' height='250'></center>\
                 <p> Te encuentras en la tienda donde se compran las equipaciones del Madrid, entre otros accesorios.</a></p>");
                         
                 if(character.equipacionchino==0 || character.qualities.equipacionc==0){
@@ -300,21 +362,30 @@ undum.game.situations = {
 
 
                 if(character.equipacionmadrid==0){
-                    system.write("<p><a href='./comprarc' class='once'>- Comprar la equipación del Real Madrid Oficial </a></p>");
+                    system.write("<p><a href='./comprarc' class='once'> - Comprar la equipación del Real Madrid Oficial </a></p>");
                 }
 
                 if(character.equipacionchino==0){
                     system.write("<p><a href='./comprarb' class='once'> - Comprar de los Chinos.</a></p>");
                 }
 
-                if(character.qualities.hora<24){
-                system.write("<p class='transient'>El jefe de la tienda en la entrada que necesita ayuda y te pregunta si le puedes echar una mano y te pagará 20 euros cada vez que le ayudes,\
-                parece estar teniendo un mal día sin embargo no te gustaría perder mucho tiempo, pero dice que te remunerará bién... <a href='./ayudar'> puedes ayudarlo. </a>.</p>");
-                }
 
-                system.write("<p><a href='calledos' class='once'> Volver a la calle principal</a></p>");
+                system.write("<p>El jefe de la tienda en la entrada que necesita ayuda y te pregunta si le puedes echar una mano y te pagará 20 euros cada vez que le ayudes,\
+                parece estar teniendo un mal día sin embargo no te gustaría perder mucho tiempo, pero dice que te remunerará bién... <a href='./ayudar'> puedes ayudarlo. </a>.</p>");
+                
+
+                system.write("<p class='transient'><a href='calledos' class='once'> Volver a la calle principal</a></p>");
             },
         },
+    ),
+
+
+    finaltwo: new undum.SimpleSituation(
+
+        "<h1>Fin del juego, objetivo no cumplido II</h1>\
+    <center><img src='media/games/tutorial/end.jpg' width='450' height='200'></center>\
+    <p>Has pasado el tiempo máximo por lo que no te ha dado tiempo a hacer las compras antes del tiempo fijado</p>",
+
     ),
 
     habitacionbuscar: new undum.SimpleSituation(
@@ -328,8 +399,13 @@ undum.game.situations = {
             actions: {
                 bolsillo: function (character, system, action) {
                     system.setQuality("mascarilla", 1);
+                } 
+            },
+                enter: function (character, system, action) {
+                    system.setCharacterText("<p>Pierdes 15 minutos hasta que encuentras la mascarilla.</p>");
+                    system.setQuality("hora",character.qualities.hora-15);
                 }
-            }
+
         }
 
 
@@ -339,14 +415,13 @@ undum.game.situations = {
     finalone: new undum.SimpleSituation(
         "<h1>Fin del juego, objetivo no cumplido I</h1>\
     <center><img src='media/games/tutorial/end.jpg' width='450' height='200'></center>\
-    <p>No te despiertas en todo el día y acabas levantándote a las 24:00 por lo que no podrás ver a tu equipo en la final, almenos tu energía estará al máximo al dia siguiente</p>",
-        {
-            enter: function (character, system, action) {
-                system.setCharacterText("<p>Son las 12 de la noche del siguiente día, pero almenos dispondras de toda la energía posible");
-                system.setQuality("hora", 24, 00);
-                character.qualities.dinero = 20;
-            }
+    <p>No te despiertas en toda la mañana y acabas levantándote muy tarde y todas las tiendas estarán cerradas por lo que no podrás ver a tu equipo en la final</p>",
+    {
+    
+        enter: function (character, system, from) {
+            system.setQuality("hora", 0);
         }
+    }
     ),
 
 };
@@ -361,11 +436,8 @@ undum.game.start = "start";
  * possess. We don't have to be exhaustive, but if we miss one out then
  * that quality will never show up in the character bar in the UI. */
 undum.game.qualities = {
-    energia: new undum.NumericQuality(
-        "Energia", { priority: "0002", group: 'estadisticas' }
-    ),
     hora: new undum.NumericQuality(
-        "Hora", { priority: "0001", group: 'tiempo' }
+        "Minutos", { priority: "0001", group: 'tiempo' }
     ),
     dinero: new undum.NumericQuality(
         "Dinero", { priority: "0001", group: 'inventario' }
@@ -400,8 +472,7 @@ undum.game.qualities = {
  * the end. It is an error to have a quality definition belong to a
  * non-existent group. */
 undum.game.qualityGroups = {
-    estadisticas: new undum.QualityGroup('Estadisticas', { priority: "0001" }),
-    tiempo: new undum.QualityGroup('Hora', { priority: "0001" }),
+    tiempo: new undum.QualityGroup('Tiempo restante', { priority: "0001" }),
     inventario: new undum.QualityGroup('Inventario', { priority: "0001" }),
     requisitos: new undum.QualityGroup('Requisitos', { priority: "0001" })
 };
@@ -411,14 +482,16 @@ undum.game.qualityGroups = {
  * to configure the character at the start of play. */
 undum.game.init = function (character, system) {
     system.setCharacterText("<p>You are starting on an exciting journey.</p>");
-    character.qualities.energia = 12;
-    character.qualities.hora = 8;
     character.variable = 0;
-    character.ayudar = 0;
+    character.encontrado = 0;
     character.equipacionchino = 0;
     character.equipacionmadrid = 0;
+    character.extrano = 0
+    character.minutosiniciales=390;
 };
+var extrano=0;
 var variable = 0;
-var ayudar=0;
+var encontrado=0;
 var equipacionchino=0;
 var equipacionmadrid=0;
+var minutosiniciales=360;
