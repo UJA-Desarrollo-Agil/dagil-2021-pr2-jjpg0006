@@ -1,140 +1,57 @@
-# Undum
+# Documentación práctica 2
+Aqui se expondrá la información requerida sobre la práctica 2.
+Se ha cogido el ejemplo tutorial.en.html y se ha hecho una copia por lo que el archivo .html donde lo he llevado acabo esta en la misma carpeta con el nombre **tutorial - copia.en.html**, para el .js se ha llevado el mismo proceso he hecho una copia del js del .en y es llamado como **tutorial.game.en2.js**, está en la misma carpeta que el original y además se han incluido las imagenes que contiene el juego.
 
-Undum is a game framework for building a sophisticated form of
-hypertext interactive fiction.
+## Descripción del juego.
+El juego va sobre que hoy es el último día para realizar todas las compras que he estado aplazando durante semanas, mañana es la final de la Champions entre mi equipo favorito, el Real Madrid y el Paris Saint Germain, mi deber es comprar la entrada al partido de Champions en la peña, la equipación ofical del Madrid en la tienda y el billete de avión en el aeropuerto. Debo de comprar todo y volver a tu casa antes de las 14:30 que es cuando cierran todas las tiendas y tengo que tener tiempo suficiente para preparar la comida.
 
-If that means nothing to you, then let's go back a few steps. Remember
-those Choose Your Own Adventure, or Fighting Fantasy books? Where you
-got to choose what your character does next? Well if you think of that
-in a web-page you have hypertext interactive fiction, or HIF. Instead
-of turning to a particular page, you click a link, and the next bit of
-content appears.
+El juego tiene las siguientes situaciones:
+* **Start**: Es donde empiezo el juego, me encuentro en mi habitación y mi madre me intenta levantar. Puedo elegir si me quedo dormido hasta que suene la alarma o me levanto y me voy al pasillo.
+* **Habitaciondos**: Es la situación consecuencia a elegir en start la opción de dormir: me sigo encontrando en mi habitación y me despierta la alarma esta vez, ha pasado una hora.  Puedo elegir si me quedo dormido hasta que suene la alarma o me levanto.
+* **Finalone**: Es la situación consecuencia a elegir en Habitaciondos la opción de dormir: me levanto tarde y no me da tiempo a hacer las compras, he perdido mi objetivo.
+* **Pasillo**: Es donde me dirijo después de haberme levantado en habitaciondos o start: aqui po elegir entre irme a la calle o irme al comedor.
+* **Comedor**: Si me levanté a la hora que te dijo mi madre, me la encontraré camino al comedor y me dará un boleto de descuento, si me levanté tarde no estará y en consecuencia no lo recibiré. Aquí tendré la opción de irme a la calle o revisar mi habitación, en el comedor además encontrare unas llaves y dinero.
+* **Habitacionbuscar**: Es donde me dirijo después de elegir la opción de revisar mi habitación, es donde encuentro la mascarilla, después de eso iré a la calle.
+* **Calleuno**: Es donde me dirijo después de elegir la opción de salir a la calle. Si tengo la mascarilla la policía me dejará pasar, si tengo las llaves pero no la mascarilla, podré entrar a cogerla, si no tengo ni la llave ni la mascarilla no podré ir a ningún lado y perderé.
+* **Calledos**: Es la calle principal dondré podré ir a todos los lugares que necesito, tengo que pasar por aquí después de ir a un lugar, es decir si quiero ir a la tienda y al aeropuerto, primero debo ir a esta calle, luego a la tienda, luego volver a la calle y luego ir al aeropuerto, luego debo de volver a esta calle si quiero volver a ir a otro lugar. Cada vez que pase por esta calle **pasarán 30 minutos** representan los minutos que han pasado desde que has ido hasta que has vuelto.
+* **Aeropuerto**: Es donde puedo comprar el billete de avión cuando no tengo el boleto de descuento: será mas caro.
+* **Aeropuertoconboleto**: Es donde puedo comprar el billete de avión cuando tengo el boleto de descuento: será más barato.
+* **Atajopena**: Es un atajo para ir a la peña, la primera vez y solo la primera vez me aparecerá un tipo que te intenta estafar, además hay un billete en el suelo que puedo coger una vez.
+* **Pena**: Es donde puedo comprar la entrada al Madrid tendré que pagar la entrada ya que no tengo la camiseta barata (aunque puedo ir a la tienda a por ella).
+* **Penaequipacionb**:Es donde puedo comprar la entrada al Madrid, si tengo una equipación barata del madrid, el presidente me ofrecerá la entrada gratis por ella.
+* **Tienda**: Es donde puedo comprar la equipación oficial del Real Madrid que se necesita y una barata no oficial para darsela al Presidente y conseguir la entrada gratis. También podremos **trabajar** todas las veces que quiera mientras **disponga de tiempo para conseguir dinero**.
+* **Finaltwo**: Es la situación donde estoy cuando me quedo sin tiempo, he perdido mi objetivo.
+* **Casa**: Es la situación que ocurre cuando vuelvo a mi casa desde la calle principal pero no he conseguido los 3 objetos que necesito, por lo tanto no pasará nada y tendré que volver a la calle principal.
+* **Casavictoria**: Es la situación que ocurre cuando vuelvo a mi casa desde la calle principal y he conseguido los 3 objetos que necesito. **Por lo tanto he ganado y he completado mi objetivo**.
 
-The problem is that those kinds of games are pretty limited. Every
-time the player does something, the story could go in different
-directions. So the author has to either write masses of branches, or
-else the decisions you make as a player have to be relatively short
-lived. If you played CYOA books you'll know that the wrong move either
-ended the story pretty quickly, or else it didn't really matter what
-you did because you'd end up at the same place.
+### Guía simple de como ganar fácilmente.
+Hay diferentes maneras de como ganar (como trabajar en la tienda varias veces aunque hayas tomado malas decisiones en el pasado), pero expondré la más simple.
+En la primera situación cuando te levantas, elegir la opción de levantarte.
+En el pasillo, ir al comedor.
+En el comedor (conseguimos el boleto de descuento), coger dinero y llaves.
+Después, ir a la habitación.
+Recoger mascarilla en habitación e ir a la calle.
+Encontrar la mascarilla en la calle simón en la opción tocar los bolsillos e ir a la calle principal.
+Ir a la tienda y comprar ambas equipaciones.
+Volver a la calle principal.
+Ir a la peña a través del atajo, coger el billete, ignorar al estafador e ir a la peña.
+En la peña intercambiamos la camiseta por la entrada.
+Volver a la calle principal.
+Vamos al aeropueto y compramos el billete descontado gracias al boleto de descuento.
+Volvemos a la calle principal.
+Volvemos a la casa.
 
-To beat this limitation, Undum allows you to make the output
-dynamic. It allows you to keep track of what has happened to the
-character (any kinds of data, in fact), and to then change the text
-that gets output accordingly. Effectively it is like writing a CYOA
-page that is different each time you read it. This allows for far
-richer and more rewarding game design.
+## URL Trello
+https://trello.com/b/sJP85JN4/practica-2
 
-Undum is a pure client client-side library. It consists of a HTML file
-and three Javascript files. The HTML file uses a nice bit of styling,
-so there's a bunch of CSS and images in the default package too, but
-that can be replaced if you want. To create your own game, you edit
-the HTML file a little (mainly just changing the title and author),
-and edit one of the Javascript files.
+## Capturas de pantalla tablero trello
+Aqui mostraré la evolución del tablero de trello a través de la ejecución del proyecto.
+![cap1](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap1.png)
+![cap2](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap2.png)
+![cap3](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap3.png)
+![cap4](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap4.png)
 
-Because the game is written in Javascript, you get the full power of a
-dynamic and efficient programming language. This isn't a CYOA
-scripting system with limited functionality. You can take control of
-anything you want. Or you can just keep things simple using a bunch of
-simple functions provided by Undum.
+## Capturas de pantalla de la aplicación Telegram
+Aqui mostraré la captura de pantalla de que el repositorio se encuentra correctamente enlazado a trello.
+![cap5](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap5.png)
 
-
-## Compatibility
-
-Undum is designed for HTML5 and CSS3 browsers. It has been tested on
-Firefox 3.6, Chrome 5, and Safari 5. Older browsers may work okay too,
-but some of the animation won't work, the styles may render poorly,
-and saving and loading of games is unlikely to work. Anyone who wants
-to hack around with it and make it work more widely is welcome. Just
-fork this project on Github.
-
-The local storage system on some browsers does not work when loading a
-page from your hard drive. To test your game when developing it, you
-may want to start up a simple local webserver. I have found that
-Chrome seems to reliably provide local storage for local
-development. It also has excellent Javascript debugging tools.
-
-
-## Getting Started
-
-1. Download Undum. Use the 'download zip' link in the right column of
-   this page.
-
-2. Unzip Undum somewhere on your hard-drive.
-
-3. Open games/tutorial.html in your browser, and play through the tutorial.
-
-4. Copy games/tutorial.html to a file that reflects your game name.
-
-5. Edit your HTML file and add the title, author and description of
-   the game you want to write. At the bottom of the file change the
-   name of `tutorial.game.js` to something else (by convention
-   *your-game-name*`.game.js`.
-
-6. Copy `tutorial.game.js` to the file name you chose in the last
-   step. Open it and begin creating your game.
-
-
-Reference documentation, including full API details, is at
-[http://idmillington.github.io/undum/](http://idmillington.github.io/undum/),
-and is also included in the repository.
-
-The source code for all the files is also heavily commented, so if you
-get stuck, go in and read it.
-
-
-## Deploying
-
-To deploy your game, just upload your HTML file and the `media` folder
-to your webserver. You can serve several games with the same look and
-feel from the same directory. You need a different HTML file for each
-game, and each one should load the correct `.game.js` file at the
-end. Add any media you need for your game (images, audio, video), and
-the remaining files will be reused.
-
-For example, if you had 3 games: `episode1`, `episode2`, and
-`christmas-special`. You'd have a directory structure:
-
-    episode1.html
-    episode2.html
-    christmas-special.html
-    media/
-        css/ ...
-        img/ ...
-        js/
-            jquery-1.4.2.min.js
-            undum.js
-        games/
-            episode1/
-                episode1.game.js
-                ... media for episode 1 ...
-            episode2/
-                episode2.game.js
-                ... media for episode 1 ...
-            christmas-special/
-                christmas-special.game.js
-                ... media for christmas special ...
-
-This assumes you use the same directory lay out that I do. You are
-welcome to change things around, of course, as long as you work and
-change the references.
-
-
-## Undum
-
-The name `undum` came from a little project that preceded this code
-base. In 2008 I put together a simple browser based game. It was
-narrative, but used the grind-based mechanics of games such as
-Farmville and Mafia Wars. Because of the grinding, I called it
-Carborundum, which I found I couldn't type at speed, so it became
-Undum. The code has changed out of all recognition since them, as the
-grind-based game moved to Flash. But the name stuck for the Javascript
-framework.
-
-
-## License
-
-The code, documentation, styles, design and images are all distributed
-under the MIT license. This permits you to modify and use them, even
-for commercial use. A copy of the MIT license is found in the LICENSE
-file.
