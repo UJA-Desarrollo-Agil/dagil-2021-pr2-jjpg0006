@@ -1,0 +1,31 @@
+#title {
+    background: #e6e6c6 url("../img/a.jpg") no-repeat ;
+		border-width: 0px;
+}
+
+.dialogo {
+	font-style: italic;
+	padding-left: 2em;
+	padding-top: 1.2em;
+	padding-bottom: 1.2em;
+}
+
+.personaje {
+	color: rgb( 80, 80,120 );
+}
+
+#info_panel p {
+  font-size: 80%;
+}
+
+.img-situation {
+  width: 100%;
+}
+
+#content a {
+  border: 1px dotted black;
+  background-color: rgba( 0,0,0,0.2);
+  color: black;
+  font-weight: bold;
+  padding: 2px;
+}
