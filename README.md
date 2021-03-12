@@ -50,6 +50,7 @@ Aqui mostraré la evolución del tablero de trello a través de la ejecución de
 ![cap2](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap2.png)
 ![cap3](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap3.png)
 ![cap4](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap4.png)
+![cap6](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap6.png)
 
 ## Capturas de pantalla de la aplicación Telegram
 Aqui mostraré la captura de pantalla de que el repositorio se encuentra correctamente enlazado a trello.
