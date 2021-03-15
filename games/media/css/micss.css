@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500&display=swap');
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Shippori Mincho B1', serif;
 }
 
 #title {
@@ -29,8 +29,8 @@
 
 #content a {
   border: 1px dotted black;
-  background-color: rgba( 0,0,0,0.2);
-  color: black;
+  background-color: rgba( 0.2,0.2,0,0.2);
+  color: red;
   font-weight: bold;
   padding: 2px;
 }
