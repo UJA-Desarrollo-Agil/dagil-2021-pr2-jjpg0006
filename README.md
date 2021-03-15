@@ -1,7 +1,9 @@
 # Documentación práctica 2
 Aqui se expondrá la información requerida sobre la práctica 2.
 Se ha cogido el ejemplo tutorial.en.html y se ha hecho una copia por lo que el archivo .html donde lo he llevado acabo esta en la misma carpeta con el nombre **Elgranpartido.html**, para el .js se ha llevado el mismo proceso he hecho una copia del js del .en y es llamado como **Elgranpartido.js**, está en la misma carpeta que el original y además se han incluido las imagenes que contiene el juego.
+
 ![cap7](https://github.com/UJA-Desarrollo-Agil/dagil-2021-pr2-jjpg0006/blob/master/capturas/cap7.png)
+
 ## Descripción del juego.
 El juego va sobre que hoy es el último día para realizar todas las compras que he estado aplazando durante semanas, mañana es la final de la Champions entre mi equipo favorito, el Real Madrid y el Paris Saint Germain, mi deber es comprar la entrada al partido de Champions en la peña, la equipación ofical del Madrid en la tienda y el billete de avión en el aeropuerto. Debo de comprar todo y volver a tu casa antes de las 14:30 que es cuando cierran todas las tiendas y tengo que tener tiempo suficiente para preparar la comida.
 
